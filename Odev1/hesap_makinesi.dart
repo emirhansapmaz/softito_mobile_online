@@ -1,7 +1,8 @@
 // Öğrenci Projesi - Basit Hesap Makinesi
 
+// [feature/toplama-gelistirme]: Toplama işlemi özelleştirildi
 int islemYap(int a, int b) {
-  // Varsayılan işlem
+  print("Toplama işlemi yapılıyor...");
   return a + b;
 }
 
