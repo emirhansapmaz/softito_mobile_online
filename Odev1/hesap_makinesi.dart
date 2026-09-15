@@ -1,8 +1,9 @@
 // Öğrenci Projesi - Basit Hesap Makinesi
 
+// [feature/carpma-ekleme]: Çarpma işlemi olarak değiştirildi
 int islemYap(int a, int b) {
-  // Varsayılan işlem
-  return a + b;
+  print("Çarpma işlemi yapılıyor...");
+  return a * b;
 }
 
 void main() {
