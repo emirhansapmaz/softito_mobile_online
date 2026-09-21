@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ürün Tanıtımı - SmartWatch X</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            line-height: 1.6; 
+            margin: 20px; 
+            max-width: 800px; 
+            margin: auto; 
+            padding: 20px;
+            background-color: #0d1b2a;
+            color: #e0e1dd;
+        }
+        h1, h2 { color: #ffffff; }
+        .video-container { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 20px; 
+            margin-bottom: 20px; 
+        }
+        .meter-container { 
+            margin: 20px 0; 
+            padding: 15px;
+            background-color: #1b263b;
+            border-radius: 8px;
+        }
+        meter {
+            width: 100%;
+            height: 25px;
+        }
+        details { 
+            background-color: #1b263b; 
+            padding: 10px 15px; 
+            margin-bottom: 10px; 
+            border-radius: 5px; 
+            border: 1px solid #415a77;
+        }
+        summary { 
+            font-weight: bold; 
+            cursor: pointer; 
+            font-size: 1.1em;
+            color: #e0e1dd;
+        }
+        details p {
+            margin-top: 10px;
+            color: #bdc3c7;
+        }
+        dialog { 
+            padding: 20px; 
+            border-radius: 8px; 
+            border: none; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5); 
+            max-width: 400px;
+            background-color: #0d1b2a;
+            color: #e0e1dd;
+        }
+        dialog::backdrop { 
+            background-color: rgba(0, 0, 0, 0.6); 
+            backdrop-filter: blur(3px);
+        }
+        button { 
+            padding: 10px 20px; 
+            cursor: pointer; 
+            background-color: #007BFF; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+        button:hover { background-color: #0056b3; }
+        .close-btn { background-color: #dc3545; }
+        .close-btn:hover { background-color: #c82333; }
+        .dialog-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Başlık -->
+    <h1>Geleceğin Akıllı Saati: SmartWatch X</h1>
+
+    <!-- Tanıtım Videoları -->
+    <div class="video-container">
+        <h2>Ürün Videosu</h2>
+        <!-- video playsinline etiketi -->
+        <video width="100%" controls playsinline>
+            <!-- Örnek bir video kaynağı kullanılmıştır -->
+            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+            Tarayıcınız video etiketini desteklemiyor.
+        </video>
+
+        <h2>YouTube İnceleme Videosu</h2>
+        <!-- iframe etiketi -->
+        <iframe width="100%" height="450" src="https://www.youtube.com/embed/Fcw0_bcSob8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    <!-- Stok Durumu -->
+    <div class="meter-container">
+        <h2>Stok Durumu</h2>
+        <label for="stock">Mevcut Stok (75%): </label>
+        <br><br>
+        <!-- meter etiketi -->
+        <meter id="stock" value="75" min="0" max="100" low="20" high="80" optimum="100" title="Stokta yeterli miktarda var"></meter>
+        <p style="font-size: 0.9em; color: #d9534f; font-weight: bold;">Tükenmeden hemen alın!</p>
+    </div>
+
+    <!-- Soru Cevap Alanı -->
+    <h2>Sıkça Sorulan Sorular</h2>
+    
+    <!-- details ve summary 1 -->
+    <details>
+        <summary>Ürünün garantisi var mı?</summary>
+        <p>Evet, SmartWatch X satın aldığınız tarihten itibaren 2 yıl boyunca resmi üretici garantisi altındadır. Kullanıcı hatası dışındaki tüm donanımsal sorunlar ücretsiz olarak giderilir.</p>
+    </details>
+
+    <!-- details ve summary 2 -->
+    <details>
+        <summary>Hangi telefonlarla uyumlu çalışır?</summary>
+        <p>Cihazımız hem iOS (sürüm 12.0 ve üzeri) hem de Android (sürüm 8.0 ve üzeri) işletim sistemine sahip tüm akıllı telefonlarla tam uyumlu olarak çalışmaktadır. Bluetooth 5.0 teknolojisi ile kesintisiz bağlantı sağlar.</p>
+    </details>
+
+    <!-- Detaylı Bilgi Al Butonu -->
+    <div style="margin-top: 40px; text-align: center;">
+        <button id="openDialogBtn" style="font-size: 1.2em; padding: 15px 30px;">Detaylı Bilgi Al</button>
+    </div>
+
+    <!-- Dialog Modal Penceresi -->
+    <dialog id="infoDialog">
+        <h2>Detaylı Bilgi Talebi</h2>
+        <p>Ürün hakkında daha fazla bilgi almak veya ön sipariş vermek için iletişim bilgilerinizi bırakın, müşteri temsilcilerimiz en kısa sürede size ulaşsın.</p>
+        
+        <form method="dialog">
+            <label for="email">E-posta Adresiniz:</label><br>
+            <input type="email" id="email" name="email" required style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;"><br>
+            
+            <div class="dialog-buttons">
+                <button type="button" class="close-btn" id="closeDialogBtn">İptal</button>
+                <button type="submit">Gönder</button>
+            </div>
+        </form>
+    </dialog>
+
+    <script>
+        // DOM Elementlerini seçme
+        const dialog = document.getElementById('infoDialog');
+        const openBtn = document.getElementById('openDialogBtn');
+        const closeBtn = document.getElementById('closeDialogBtn');
+
+        // Detaylı Bilgi Al butonuna tıklanınca modal'ı aç (showModal() arka planı kilitler)
+        openBtn.addEventListener('click', () => {
+            dialog.showModal();
+        });
+
+        // İptal butonuna tıklanınca modal'ı kapat
+        closeBtn.addEventListener('click', () => {
+            dialog.close();
+        });
+        
+        // Modalın dışına (backdrop) tıklanırsa kapatma özelliği
+        dialog.addEventListener('click', (e) => {
+            const dialogDimensions = dialog.getBoundingClientRect();
+            if (
+                e.clientX < dialogDimensions.left ||
+                e.clientX > dialogDimensions.right ||
+                e.clientY < dialogDimensions.top ||
+                e.clientY > dialogDimensions.bottom
+            ) {
+                dialog.close();
+            }
+        });
+    </script>
+</body>
+</html>
