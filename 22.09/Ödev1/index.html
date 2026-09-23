@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sıfır Araç Detayı - Ferrari</title>
+    <style>
+
+*,
+ *::before, 
+ *::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #121212;
+    display: flex;
+    justify-content: center;
+    color: #e0e0e0;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 480px;
+    background-color: #121212;
+    position: relative;
+    min-height: 100vh;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.9);
+}
+
+.mobile-menu {
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #1e1e1e;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+.mobile-menu h1 {
+    font-size: 1.2rem;
+    margin: 0;
+    color: #ffffff;
+}
+
+.mobile-menu button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #ffffff;
+    padding: 0;
+}
+
+
+.product-image-container {
+    position: relative;
+    width: 100%;
+    background-color: #1e1e1e;
+}
+
+.product-image-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    max-height: 400px;
+}
+
+.badge {
+    position: absolute;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #fff;
+    z-index: 10;
+}
+
+.badge.discount {
+    top: 15px;
+    left: 15px;
+    background-color: #ff2800; 
+}
+
+.badge.free-shipping {
+    top: 15px;
+    right: 15px;
+    background-color: #10b981; 
+}
+
+/* Ürün Detay Bölümü */
+.product-details {
+    padding: 20px;
+}
+
+.product-title {
+    font-size: 1.5rem;
+    margin: 0 0 10px 0;
+    color: #ffffff;
+}
+
+.product-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #aaaaaa;
+    margin-bottom: 25px;
+}
+
+.size-selection h3 {
+    font-size: 1rem;
+    margin: 0 0 10px 0;
+    color: #ffffff;
+}
+
+.size-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.chip {
+    padding: 10px 16px;
+    border: 1px solid #404040;
+    border-radius: 8px;
+    background-color: #2a2a2a;
+    color: #cccccc;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.chip.color-rosso:hover { border-color: #ff2800; color: #fff; }
+.chip.color-rosso.active { background-color: #ff2800; border-color: #ff2800; color: #fff; }
+
+.chip.color-darkblue:hover { border-color: #2563eb; color: #fff; }
+.chip.color-darkblue.active { background-color: #2563eb; border-color: #2563eb; color: #fff; }
+
+.chip.color-giallo:hover { border-color: #eab308; color: #fff; }
+.chip.color-giallo.active { background-color: #eab308; border-color: #eab308; color: #121212; font-weight: 700; }
+
+.chip.color-nero:hover { border-color: #64748b; color: #fff; }
+.chip.color-nero.active { background-color: #64748b; border-color: #64748b; color: #fff; }
+
+
+.spacer {
+    height: 90px;
+}
+
+.bottom-bar {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #1e1e1e;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.5);
+    z-index: 100;
+}
+
+@media (max-width: 480px) {
+    .bottom-bar {
+        left: 0;
+        transform: none;
+    }
+}
+
+.price-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.old-price {
+    font-size: 0.85rem;
+    color: #777777;
+    text-decoration: line-through;
+    margin-bottom: 2px;
+}
+
+.new-price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ff2800;
+}
+
+.add-to-cart-btn {
+    background-color: #ff2800;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #cc2000;
+}
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Mobil Menü Çubuğu -->
+        <header class="mobile-menu">
+            <button class="menu-btn">&equiv;</button>
+            <h1>Araç Detayı</h1>
+            <button class="cart-btn">&#128722;</button>
+        </header>
+
+        <main class="product-content">
+            <!-- Ürün Görseli ve Rozetler -->
+            <div class="product-image-container">
+                <span class="badge discount">%10 İndirim</span>
+                <span class="badge free-shipping">Evinize Teslim</span>
+                <!-- Şık bir Ferrari görseli -->
+                <img src="ferrari.jpg" alt="Ferrari 458 Italia" class="product-image">
+            </div>
+
+            <!-- Ürün Detayları -->
+            <div class="product-details">
+                <h2 class="product-title">Ferrari 458 Italia</h2>
+                <p class="product-description">
+                    Atmosferik 4.5 Litre V8 motor, 570 beygir gücü ve 540 Nm tork. 0'dan 100 km/s hıza sadece 3.4 saniyede ulaşan bu aerodinamik şaheser ile yarış pistlerinin adrenalinini yollarda hissedin. Çift kavramalı 7 ileri F1 şanzıman ve karbon seramik frenlerle üstün kontrol!
+                </p>
+
+                <!-- Beden / Numara Seçimi (Zorunlu çip listesi kuralı) -->
+                <div class="size-selection">
+                    <h3>Renk Seçenekleri</h3>
+                    <div class="size-chips">
+                        <div class="chip color-rosso active">Rosso Corsa</div>
+                        <div class="chip color-darkblue">Dark Blue</div>
+                        <div class="chip color-giallo">Giallo Modena</div>
+                        <div class="chip color-nero">Nero Daytona</div>
+                    </div>
+                </div>
+                
+                <div class="spacer"></div>
+            </div>
+        </main>
+
+        <footer class="bottom-bar">
+            <div class="price-container">
+                <span class="old-price">32.500.000 TL</span>
+                <span class="new-price">31.250.000 TL</span>
+            </div>
+            <button class="add-to-cart-btn">Sepete Ekle</button>
+        </footer>
+    </div>
+</body>
+</html>
