@@ -63,6 +63,7 @@ body {
     position: relative;
     width: 100%;
     background-color: #1e1e1e;
+    overflow: hidden; /* Büyüyen resmin dışarı taşmasını engeller */
 }
 
 .product-image-container img {
@@ -71,6 +72,11 @@ body {
     display: block;
     object-fit: cover;
     max-height: 400px;
+    transition: transform 0.4s ease;
+}
+
+.product-image-container:hover img {
+    transform: scale(1.08); /* Hover durumunda büyür */
 }
 
 .badge {
@@ -136,17 +142,28 @@ body {
     transition: all 0.2s ease;
 }
 
-.chip.color-rosso:hover { border-color: #ff2800; color: #fff; }
-.chip.color-rosso.active { background-color: #ff2800; border-color: #ff2800; color: #fff; }
+/* CSS Only Radio Hack (JavaScript olmadan) */
+.chip-wrapper {
+    cursor: pointer;
+}
+.chip-wrapper input {
+    display: none;
+}
+.chip-wrapper span.chip {
+    display: inline-block;
+}
 
-.chip.color-darkblue:hover { border-color: #2563eb; color: #fff; }
-.chip.color-darkblue.active { background-color: #2563eb; border-color: #2563eb; color: #fff; }
+.chip.color-rosso:hover { border-color: #ff2800; color: #fff; transform: translateY(-2px) scale(1.05); }
+.chip-wrapper input:checked + .chip.color-rosso { background-color: #ff2800; border-color: #ff2800; color: #fff; }
 
-.chip.color-giallo:hover { border-color: #eab308; color: #fff; }
-.chip.color-giallo.active { background-color: #eab308; border-color: #eab308; color: #121212; font-weight: 700; }
+.chip.color-darkblue:hover { border-color: #2563eb; color: #fff; transform: translateY(-2px) scale(1.05); }
+.chip-wrapper input:checked + .chip.color-darkblue { background-color: #2563eb; border-color: #2563eb; color: #fff; }
 
-.chip.color-nero:hover { border-color: #64748b; color: #fff; }
-.chip.color-nero.active { background-color: #64748b; border-color: #64748b; color: #fff; }
+.chip.color-giallo:hover { border-color: #eab308; color: #fff; transform: translateY(-2px) scale(1.05); }
+.chip-wrapper input:checked + .chip.color-giallo { background-color: #eab308; border-color: #eab308; color: #121212; font-weight: 700; }
+
+.chip.color-nero:hover { border-color: #64748b; color: #fff; transform: translateY(-2px) scale(1.05); }
+.chip-wrapper input:checked + .chip.color-nero { background-color: #64748b; border-color: #64748b; color: #fff; }
 
 
 .spacer {
@@ -203,11 +220,12 @@ body {
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.3s ease;
 }
 
 .add-to-cart-btn:hover {
     background-color: #cc2000;
+    transform: scale(1.05);
 }
     </style>
 </head>
@@ -240,10 +258,22 @@ body {
                 <div class="size-selection">
                     <h3>Renk Seçenekleri</h3>
                     <div class="size-chips">
-                        <div class="chip color-rosso active">Rosso Corsa</div>
-                        <div class="chip color-darkblue">Dark Blue</div>
-                        <div class="chip color-giallo">Giallo Modena</div>
-                        <div class="chip color-nero">Nero Daytona</div>
+                        <label class="chip-wrapper">
+                            <input type="radio" name="color-option" checked>
+                            <span class="chip color-rosso">Rosso Corsa</span>
+                        </label>
+                        <label class="chip-wrapper">
+                            <input type="radio" name="color-option">
+                            <span class="chip color-darkblue">Dark Blue</span>
+                        </label>
+                        <label class="chip-wrapper">
+                            <input type="radio" name="color-option">
+                            <span class="chip color-giallo">Giallo Modena</span>
+                        </label>
+                        <label class="chip-wrapper">
+                            <input type="radio" name="color-option">
+                            <span class="chip color-nero">Nero Daytona</span>
+                        </label>
                     </div>
                 </div>
                 
@@ -259,5 +289,6 @@ body {
             <button class="add-to-cart-btn">Sepete Ekle</button>
         </footer>
     </div>
+
 </body>
 </html>
