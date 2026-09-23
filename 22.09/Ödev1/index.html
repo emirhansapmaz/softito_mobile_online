@@ -52,10 +52,38 @@ body {
 .mobile-menu button {
     background: none;
     border: none;
-    font-size: 1.5rem;
     cursor: pointer;
     color: #ffffff;
-    padding: 0;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.mobile-menu button:hover {
+    background-color: #2a2a2a;
+    color: #ff2800;
+    transform: scale(1.1);
+}
+
+.cart-badge {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background-color: #ff2800;
+    color: white;
+    font-size: 0.65rem;
+    font-weight: bold;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #1e1e1e; /* Menü arkaplanıyla uyumlu kenarlık */
 }
 
 
@@ -81,24 +109,32 @@ body {
 
 .badge {
     position: absolute;
-    padding: 6px 12px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 24px; /* Oval (hap) görünüm */
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
     color: #fff;
     z-index: 10;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .badge.discount {
     top: 15px;
     left: 15px;
-    background-color: #ff2800; 
+    background: rgba(255, 40, 0, 0.85); /* Saydam Ferrari Kırmızısı */
+    border-color: rgba(255, 40, 0, 0.5);
 }
 
 .badge.free-shipping {
     top: 15px;
     right: 15px;
-    background-color: #10b981; 
+    background: rgba(16, 185, 129, 0.85); /* Saydam Zümrüt Yeşili */
+    border-color: rgba(16, 185, 129, 0.5);
 }
 
 /* Ürün Detay Bölümü */
@@ -233,9 +269,14 @@ body {
     <div class="app-container">
         <!-- Mobil Menü Çubuğu -->
         <header class="mobile-menu">
-            <button class="menu-btn">&equiv;</button>
-            <h1>Araç Detayı</h1>
-            <button class="cart-btn">&#128722;</button>
+            <button class="menu-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+            <img src="ferrari-logo.jpg" alt="Ferrari Logo" style="height: 35px; width: auto; border-radius: 4px;">
+            <button class="cart-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                <span class="cart-badge">1</span>
+            </button>
         </header>
 
         <main class="product-content">
