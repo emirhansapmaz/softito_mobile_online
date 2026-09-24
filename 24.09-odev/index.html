@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Şarj Süresi Hesaplayıcı</title>
+</head>
+<body>
+
+    <h1>Elektrikli Araç Şarj Süresi Hesaplayıcı</h1>
+
+
+    <script>
+        // --- YENİ EKLENEN FONKSİYONLAR ---
+        // (Şu an HTML'e bağlı değil, kod içerisinde mantık olarak bulunuyor)
+
+        // 1. Farklı araç tiplerine göre batarya kapasitesi ve max şarj gücü döndüren fonksiyon
+        const aracOzellikleriGetir = (aracIsmi) => {
+            const araclar = {
+                "togg": { bataryaKwh: 88.5, aracMaxKw: 150 },
+                "tesla": { bataryaKwh: 75, aracMaxKw: 250 },
+                "zoe": { bataryaKwh: 52, aracMaxKw: 50 },
+                "spring": { bataryaKwh: 26.8, aracMaxKw: 30 }
+            };
+            return araclar[aracIsmi.toLowerCase()] || null;
+        };
+
+        // 2. Gece-Gündüz tarifesine göre maliyet hesaplayan fonksiyon
+        const tarifeHesapla = (sarjEdilenKwh, zamanDilimi) => {
+            const gunduzFiyat = 10; // Örnek Gündüz Tarifesi: 10 TL/kWh
+            const geceFiyat = 8;    // Örnek Gece Tarifesi: 8 TL/kWh
+            
+            if (zamanDilimi === "gece") {
+                return sarjEdilenKwh * geceFiyat;
+            } else {
+                return sarjEdilenKwh * gunduzFiyat;
+            }
+        };
+        // ---------------------------------
+
+
+        // Orijinal Süre Hesaplama Fonksiyonu
+        const toplamSarjSuresi = (mevcut, hedef, bataryaKwh, aracMaxKw, istasyonKw) => {
+            // Math.min yerine üçlü (ternary) operatör ile daha küçük olan değeri (gerçek gücü) buluyoruz
+            const gercekGuc = aracMaxKw < istasyonKw ? aracMaxKw : istasyonKw;
+            
+            // 1 dakikada dolan yüzdeyi hesaplıyoruz
+            const dakikadaKwh = gercekGuc / 60;
+            const dakikadaYuzde = (dakikadaKwh / bataryaKwh) * 100;
+            
+            // İhtiyacımız olan toplam yüzde farkını buluyoruz
+            const gerekenYuzde = hedef - mevcut;
+            
+            // Toplam süreyi hesaplıyoruz
+            const toplamDakika = gerekenYuzde / dakikadaYuzde;
+            
+            // Math.round yerine parseInt kullanarak ondalıklı küsuratı atıp tam sayı elde ediyoruz
+            return parseInt(toplamDakika);
+        };
+
+        function hesapla() {
+            const mevcut = Number(document.getElementById('mevcut').value);
+            const hedef = Number(document.getElementById('hedef').value);
+            const bataryaKwh = Number(document.getElementById('bataryaKwh').value);
+            const istasyonKw = Number(document.getElementById('istasyonKw').value);
+
+            // Araç maksimum şarj gücü arayüzden alınmıyor (input yok).
+            // İleride bu değeri yukarıdaki aracOzellikleriGetir() fonksiyonundan bağlayabiliriz.
+            // Şimdilik örnekte verdiğiniz gibi 100 kW olarak sabit kaldı.
+            const aracMaxKw = 100;
+
+            const sure = toplamSarjSuresi(mevcut, hedef, bataryaKwh, aracMaxKw, istasyonKw);
+            
+            document.getElementById('sonuc').innerText = isNaN(sure) ? "Hatalı giriş yaptınız" : sure;
+        }
+
+        // ==========================================
+        // KONSOL (CONSOLE.LOG) TEST VE KULLANIM ALANI
+        // ==========================================
+        console.log("--- ELEKTRİKLİ ARAÇ ŞARJ HESAPLAMA SİMÜLASYONU ---");
+        
+        // 1. Araç Bilgilerini Çekelim
+        const secilenArac = "togg";
+        const aracBilgisi = aracOzellikleriGetir(secilenArac);
+        console.log(`Seçilen Araç: ${secilenArac.toUpperCase()}`);
+        console.log(`Batarya Kapasitesi: ${aracBilgisi.bataryaKwh} kWh, Araç Max Şarj Gücü: ${aracBilgisi.aracMaxKw} kW`);
+
+        // 2. Şarj Süresini Hesaplayalım
+        const testMevcut = 20;
+        const testHedef = 80;
+        const testIstasyonKw = 120;
+        
+        const hesaplananSure = toplamSarjSuresi(
+            testMevcut, 
+            testHedef, 
+            aracBilgisi.bataryaKwh, 
+            aracBilgisi.aracMaxKw, 
+            testIstasyonKw
+        );
+        console.log(`İstasyon Gücü: ${testIstasyonKw} kW`);
+        console.log(`%${testMevcut}'den %${testHedef}'e tahmini şarj süresi: ${hesaplananSure} dakika.`);
+
+        // 3. Maliyeti Hesaplayalım
+        // Doldurulacak olan kWh miktarını buluyoruz
+        const sarjEdilenKwh = ((testHedef - testMevcut) / 100) * aracBilgisi.bataryaKwh;
+        console.log(`Şarj Edilen Toplam Enerji: ${sarjEdilenKwh} kWh`);
+        
+        const gunduzMaliyet = tarifeHesapla(sarjEdilenKwh, "gündüz");
+        const geceMaliyet = tarifeHesapla(sarjEdilenKwh, "gece");
+        
+        console.log(`Tahmini Gündüz Maliyeti: ${gunduzMaliyet} TL`);
+        console.log(`Tahmini Gece Maliyeti: ${geceMaliyet} TL`);
+        console.log("---------------------------------------------------");
+    </script>
+</body>
+</html>

@@ -1,0 +1,245 @@
+/* 1. CSS Reset ve Değişkenler */
+:root {
+    /* Arka plan için çok koyu orman yeşili tonları */
+    --primary-bg: #062016; 
+    --secondary-bg: #0f3d2a; 
+    
+    /* Metin renkleri */
+    --primary-text: #f0fdf4; /* Saf beyaz yerine göze daha hoş gelen uçuk yeşil/beyaz */
+    --secondary-text: #86efac; /* Alt başlıklar için yumuşak açık yeşil */
+    
+    /* Vurgu Rengi: Koyu yeşil arka planda patlaması için Limon/Neon Yeşili (Lime) */
+    --accent-color: #a3e635;
+    --accent-hover: #84cc16;
+    
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 32px;
+    --spacing-xl: 64px;
+    
+    --radius-md: 12px;
+    --radius-full: 9999px;
+    
+    --transition-speed: 0.3s;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box; /* box-sizing reset */
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
+    line-height: 1.6;
+}
+
+/* --- Navbar (Üst Menü) --- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md) var(--spacing-lg);
+    /* En koyu tok yeşil burada */
+    background-color: #04120c;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 2px solid var(--accent-hover);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--accent-color);
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
+.nav-link {
+    display: none; /* Mobilde gizle */
+    cursor: pointer;
+    font-weight: 500;
+    transition: color var(--transition-speed) ease;
+}
+
+.nav-link:hover {
+    color: var(--accent-color);
+}
+
+/* 6. CSS Animation (Canlı Skor Bildirim Rozeti) */
+.notification {
+    position: relative;
+    font-size: 1.25rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.badge {
+    position: absolute;
+    top: -2px;
+    right: -4px;
+    width: 10px;
+    height: 10px;
+    background-color: var(--accent-color);
+    border-radius: var(--radius-full);
+    /* Animasyon sürekli çalışmalı (infinite) */
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(163, 230, 53, 0.7); /* accent-color RGB değeri */
+    }
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 8px rgba(163, 230, 53, 0);
+    }
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(163, 230, 53, 0);
+    }
+}
+
+/* --- Hero Section --- */
+.hero {
+    text-align: center;
+    padding: var(--spacing-xl) var(--spacing-md);
+    /* Arka plan rengi sildi, sayfanın geri kalanıyla (body) aynı renk olacak */
+    background-color: transparent;
+}
+
+/* 4. Akışkan Başlık (Fluid Typography) */
+.hero-title {
+    /* clamp() kullanımı: min-boyut, tercih-edilen, max-boyut */
+    font-size: clamp(2rem, 6vw, 4.5rem); 
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: var(--spacing-md);
+    color: #ffffff;
+    text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+.hero-subtitle {
+    color: #bbf7d0;
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto;
+    font-weight: 500;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+/* --- Haberler ve Özetler (İçerik Listesi) --- */
+.movie-list {
+    padding: var(--spacing-lg);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-header {
+    margin-bottom: var(--spacing-lg);
+}
+
+.section-header h2 {
+    font-size: 1.5rem;
+    border-left: 4px solid var(--accent-color);
+    padding-left: var(--spacing-md);
+}
+
+/* 2. CSS Grid ve 3. Mobile-First Tasarım */
+.grid-container {
+    display: grid;
+    gap: var(--spacing-lg);
+    /* 3.1. Mobil: 1 sütun (Varsayılan olarak mobile-first) */
+    grid-template-columns: 1fr;
+}
+
+/* 3.2. Tablet: 2 sütun */
+@media (min-width: 768px) {
+    .grid-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .nav-link {
+        display: block; /* Tablet ve üstünde menü öğelerini göster */
+    }
+}
+
+/* 3.3. Masaüstü: 3 veya 4 sütun */
+@media (min-width: 1024px) {
+    .grid-container {
+        grid-template-columns: repeat(3, 1fr); 
+    }
+}
+
+/* Ekstra büyük ekranlar: 4 sütun */
+@media (min-width: 1280px) {
+    .grid-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* 5. Hover ve Transition (Kart Tasarımı) */
+.card {
+    background-color: var(--secondary-bg);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    cursor: pointer;
+    /* Geçiş transition ile yumuşatılmıştır */
+    transition: transform var(--transition-speed) ease, 
+                box-shadow var(--transition-speed) ease;
+    border: 1px solid rgba(163, 230, 53, 0.1); /* Hafif lime yeşili kenarlık */
+}
+
+/* Hover sırasında yukarı kayma ve lime gölge */
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 
+                0 0 20px rgba(163, 230, 53, 0.25);
+    border-color: rgba(163, 230, 53, 0.5);
+}
+
+.card-image {
+    width: 100%;
+    height: 220px;
+    background-size: cover;
+    background-position: center;
+    border-bottom: 3px solid var(--accent-color);
+}
+
+.card-content {
+    padding: var(--spacing-md);
+}
+
+.card-content h3 {
+    font-size: 1.25rem;
+    margin-bottom: var(--spacing-sm);
+    color: var(--primary-text);
+}
+
+.card-content p {
+    color: var(--accent-color);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: var(--spacing-xl) var(--spacing-md);
+    color: var(--secondary-text);
+    border-top: 1px solid var(--secondary-bg);
+    margin-top: var(--spacing-xl);
+}

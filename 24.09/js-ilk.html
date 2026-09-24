@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+      const sarjSuresiHesapla = (mevcutYuzde, hedefYuzde, bataryaKW, istasyonKW) => {
+  let gecerliKw;
+
+  if (istasyonKW > bataryaKW) {
+    gecerliKw = bataryaKW;
+  } else {
+    gecerliKw = istasyonKW;
+  }
+
+  return {
+    mevcutYuzde: mevcutYuzde,
+    hedefYuzde: hedefYuzde,
+    bataryaKW: bataryaKW,
+    istasyonKW: istasyonKW,
+    tahminiSureDakika: (((hedefYuzde - mevcutYuzde) / 100) * bataryaKW / gecerliKw) * 60
+  };
+};
+
+// ÇIKTIYI VEREN KISIM BURASI:
+const sonuc = sarjSuresiHesapla(20, 80, 50, 120);
+console.log(sonuc);
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
